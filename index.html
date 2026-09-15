@@ -1,0 +1,858 @@
+<!doctype html>
+<title>Big Sur Field Sheet</title>
+<style>
+  :root {
+    --fog: #eef1ee;
+    --fog-2: #e2e6e1;
+    --paper: #f7f8f5;
+    --ink: #1e231f;
+    --ink-soft: #454e47;
+    --granite: #6c716a;
+    --granite-line: #cfd4cc;
+    --cypress: #3f5443;
+    --cypress-ink: #2c3b2e;
+    --kelp: #24312b;
+    --clay: #a8562e;
+    --gold: #a9800f;
+    --alert-bg: #fbeee3;
+    --alert-line: #d99a5b;
+    --alert-ink: #6b3a12;
+    --dot-green: #4f8a5b;
+    --dot-blue: #3f7f92;
+    --dot-clay: #c0693d;
+    --dot-gold: #b98f1f;
+    --card-shadow: 0 1px 0 rgba(30, 35, 31, 0.06);
+    --focus: #3f5443;
+    color-scheme: light dark;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --fog: #171d19;
+      --fog-2: #1e2521;
+      --paper: #202824;
+      --ink: #e7ece6;
+      --ink-soft: #b7c0b8;
+      --granite: #8b9289;
+      --granite-line: #384139;
+      --cypress: #8fb79a;
+      --cypress-ink: #cfe6d6;
+      --kelp: #e7ece6;
+      --clay: #e0916a;
+      --gold: #dcb659;
+      --alert-bg: #2e2115;
+      --alert-line: #7a4c22;
+      --alert-ink: #f0c9a1;
+      --dot-green: #6fae7c;
+      --dot-blue: #5aa2b8;
+      --dot-clay: #e0916a;
+      --dot-gold: #dcb659;
+      --card-shadow: none;
+      --focus: #cfe6d6;
+    }
+  }
+  :root[data-theme="dark"] {
+    --fog: #171d19;
+    --fog-2: #1e2521;
+    --paper: #202824;
+    --ink: #e7ece6;
+    --ink-soft: #b7c0b8;
+    --granite: #8b9289;
+    --granite-line: #384139;
+    --cypress: #8fb79a;
+    --cypress-ink: #cfe6d6;
+    --kelp: #e7ece6;
+    --clay: #e0916a;
+    --gold: #dcb659;
+    --alert-bg: #2e2115;
+    --alert-line: #7a4c22;
+    --alert-ink: #f0c9a1;
+    --dot-green: #6fae7c;
+    --dot-blue: #5aa2b8;
+    --dot-clay: #e0916a;
+    --dot-gold: #dcb659;
+    --card-shadow: none;
+    --focus: #cfe6d6;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--fog);
+    color: var(--ink);
+    font-family: "Work Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 15px;
+    line-height: 1.5;
+    padding-inline: 16px;
+    padding-block: 20px 48px;
+  }
+  img { max-width: 100%; }
+  [hidden] { display: none !important; }
+  a { color: var(--cypress-ink); }
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+  }
+  :focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+  .wrap { max-width: 640px; margin: 0 auto; display: flex; flex-direction: column; gap: 28px; }
+
+  h1, h2, h3 { font-family: "Fraunces", Georgia, serif; text-wrap: balance; margin: 0; color: var(--ink); }
+  .mono { font-family: "IBM Plex Mono", ui-monospace, monospace; font-variant-numeric: tabular-nums; }
+
+  /* ---- masthead ---- */
+  .masthead { display: flex; flex-direction: column; gap: 14px; }
+  .eyebrow {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--granite);
+  }
+  .masthead h1 { font-size: clamp(28px, 7vw, 38px); font-weight: 600; line-height: 1.05; }
+  .masthead .dates { font-size: 15px; color: var(--ink-soft); }
+  .factgrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--granite-line);
+    border: 1px solid var(--granite-line);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .fact {
+    background: var(--paper);
+    padding: 10px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .fact .k { font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--granite); }
+  .fact .v { font-size: 14px; color: var(--ink); }
+  .fact .v.mono { font-size: 14px; }
+
+  /* ---- alert ---- */
+  .alert {
+    background: var(--alert-bg);
+    border: 1px solid var(--alert-line);
+    border-left-width: 4px;
+    border-radius: 4px;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    color: var(--alert-ink);
+  }
+  .alert .title { font-family: "Fraunces", serif; font-weight: 600; font-size: 16px; }
+  .alert p { margin: 0; font-size: 13.5px; line-height: 1.55; }
+  .alert strong { font-weight: 700; }
+  .alert .row { display: flex; gap: 8px; }
+  .alert .tag {
+    flex: none;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 2px 6px;
+    border: 1px solid var(--alert-line);
+    border-radius: 3px;
+    height: fit-content;
+  }
+
+  /* ---- your dot ---- */
+  .idbar {
+    background: var(--paper);
+    border: 1px solid var(--granite-line);
+    border-radius: 6px;
+    padding: 12px 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .idbar .lbl { font-size: 13px; color: var(--ink-soft); flex: 1 1 auto; min-width: 160px; }
+  .swatches { display: flex; gap: 8px; }
+  .swatch {
+    width: 30px; height: 30px; border-radius: 50%;
+    border: 2px solid transparent;
+    cursor: pointer;
+    padding: 0;
+    display: block;
+  }
+  .swatch[aria-pressed="true"] { border-color: var(--ink); box-shadow: 0 0 0 2px var(--paper); }
+  .swatch:hover { filter: brightness(1.08); }
+
+  /* ---- day nav ---- */
+  .daynav {
+    position: sticky;
+    top: env(safe-area-inset-top, 0px);
+    z-index: 5;
+    display: flex;
+    gap: 8px;
+    background: var(--fog);
+    padding-block: 6px;
+    margin-inline: -16px;
+    padding-inline: 16px;
+    border-bottom: 1px solid var(--granite-line);
+  }
+  .daynav a {
+    text-decoration: none;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12px;
+    letter-spacing: 0.03em;
+    color: var(--ink-soft);
+    padding: 6px 10px;
+    border-radius: 20px;
+    border: 1px solid var(--granite-line);
+  }
+  .daynav a.today { color: var(--paper); background: var(--cypress); border-color: var(--cypress); }
+
+  /* ---- day section ---- */
+  .day { display: flex; flex-direction: column; gap: 14px; scroll-margin-top: 44px; }
+  .dayhead { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+  .dayhead h2 { font-size: 22px; font-weight: 600; }
+  .daysub { font-size: 12.5px; color: var(--granite); }
+  .todaybadge {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background: var(--cypress);
+    color: var(--paper);
+    padding: 2px 7px;
+    border-radius: 3px;
+  }
+
+  .timeline { display: flex; flex-direction: column; gap: 2px; }
+  .item {
+    display: grid;
+    grid-template-columns: 58px 1fr;
+    gap: 12px;
+    padding-block: 12px;
+    border-top: 1px solid var(--granite-line);
+  }
+  .timeline .item:first-child { border-top: none; }
+  .item .time {
+    font-size: 12.5px;
+    color: var(--granite);
+    padding-top: 2px;
+    white-space: nowrap;
+  }
+  .item .body { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+  .item .title { font-size: 15px; font-weight: 600; color: var(--ink); }
+  .item .note { font-size: 13.5px; color: var(--ink-soft); line-height: 1.5; }
+  .item.optional .title::before {
+    content: "OPTIONAL";
+    display: inline-block;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.05em;
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    border-radius: 3px;
+    padding: 1px 5px;
+    margin-right: 7px;
+    font-weight: 600;
+    vertical-align: middle;
+  }
+  .maplink {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12.5px;
+    text-decoration: none;
+    color: var(--cypress-ink);
+    border-bottom: 1px solid currentColor;
+    width: fit-content;
+  }
+  .links { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 2px; }
+
+  /* ---- vote widget ---- */
+  .vote {
+    margin-top: 8px;
+    background: var(--fog-2);
+    border: 1px solid var(--granite-line);
+    border-radius: 6px;
+    padding: 10px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .vote .q { font-size: 12px; color: var(--ink-soft); }
+  .vote .opts { display: flex; flex-direction: column; gap: 6px; }
+  .opt {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    background: var(--paper);
+    border: 1px solid var(--granite-line);
+    border-radius: 5px;
+    padding: 7px 10px;
+    cursor: pointer;
+    font: inherit;
+    font-size: 13.5px;
+    color: var(--ink);
+    text-align: left;
+  }
+  .opt:hover { border-color: var(--cypress); }
+  .opt[aria-pressed="true"] { border-color: var(--cypress); background: color-mix(in srgb, var(--cypress) 12%, var(--paper)); font-weight: 600; }
+  .opt .dots { display: flex; gap: 3px; flex: none; }
+  .opt .dots .d { width: 13px; height: 13px; border-radius: 50%; border: 1.5px solid var(--paper); margin-left: -4px; }
+  .opt .dots .d:first-child { margin-left: 0; }
+
+  /* ---- checklist ---- */
+  .checklist { display: flex; flex-direction: column; gap: 10px; }
+  .clist { display: flex; flex-direction: column; gap: 1px; background: var(--granite-line); border: 1px solid var(--granite-line); border-radius: 5px; overflow: hidden; }
+  .citem {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    background: var(--paper);
+    padding: 10px 12px;
+    cursor: pointer;
+  }
+  .citem input { margin-top: 3px; width: 16px; height: 16px; accent-color: var(--cypress); flex: none; }
+  .citem span { font-size: 13.5px; color: var(--ink); line-height: 1.45; }
+  .citem.done span { color: var(--granite); text-decoration: line-through; }
+
+  /* ---- footer / verify ---- */
+  .verify {
+    border-top: 1px solid var(--granite-line);
+    padding-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .verify h3 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--granite); font-family: "IBM Plex Mono", monospace; font-weight: 600; }
+  .verify ul { margin: 0; padding-left: 18px; font-size: 13px; color: var(--ink-soft); display: flex; flex-direction: column; gap: 5px; }
+  .verify a { color: var(--cypress-ink); }
+  .foot-links { font-size: 12px; color: var(--granite); }
+
+  .toast {
+    position: fixed;
+    bottom: max(16px, env(safe-area-inset-bottom, 0px));
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--kelp);
+    color: var(--fog);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 12.5px;
+    z-index: 10;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+  }
+  :root[data-theme="dark"] .toast, @media (prefers-color-scheme: dark) { }
+  .toast.show { opacity: 1; }
+</style>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="eyebrow">Field sheet · four riders, one car</div>
+    <h1>Big Sur &amp; Monterey</h1>
+    <div class="dates">Tuesday Sept 15 &rarr; Wednesday Sept 16, 2026</div>
+    <div class="factgrid">
+      <div class="fact"><span class="k">Tue night</span><span class="v">550 Palm Ave, Seaside, CA 93955</span></div>
+      <div class="fact"><span class="k">Sun / dusk</span><span class="v mono">6:50a rise · 7:14p / 7:13p set · ~7:40p dusk</span></div>
+      <div class="fact"><span class="k">Weather</span><span class="v">Upper 60s / mid 50s. Fog burns off midday. Layers + windbreaker.</span></div>
+      <div class="fact"><span class="k">Ocean</span><span class="v">~60&ndash;61&deg;F &mdash; warmest all year</span></div>
+    </div>
+    <div class="fact" style="border:1px solid var(--granite-line); border-radius:4px;">
+      <span class="k">No signal past Carmel</span>
+      <span class="v">Download offline maps before you leave.</span>
+    </div>
+  </header>
+
+  <section class="alert">
+    <div class="title">Timber Fire closures</div>
+    <p>~25,400 acres, 39% contained as of Sep 12. Highway 1 fully reopened Cambria &rarr; Carmel on Sep 14.</p>
+    <p><strong>Closed:</strong> Julia Pfeiffer Burns SP (McWay Falls, Partington Cove), Pfeiffer Big Sur SP, Andrew Molera SP, Point Sur SHP, Limekiln SP, and the Los Padres NF burn area (Kirk Creek, Plaskett Creek, Sand Dollar Beach, Jade Cove).</p>
+    <p><strong>Open:</strong> Point Lobos, Garrapata SP, Pfeiffer Beach, Highway 1.</p>
+    <div class="row"><span class="tag">Gotcha</span><p>12-month no-parking zone at Bixby Bridge &mdash; citations being issued. View from the car only.</p></div>
+    <div class="row"><span class="tag">Gotcha</span><p>One-way traffic control near Big Creek Bridge, weekdays 6am&ndash;4pm, about 10 minutes.</p></div>
+  </section>
+
+  <section class="idbar">
+    <span class="lbl" id="idlabel">Pick your dot to vote &mdash; no names, no sign-in.</span>
+    <div class="swatches" id="swatches" role="group" aria-label="Choose your dot color"></div>
+  </section>
+
+  <nav class="daynav">
+    <a href="#tue" id="nav-tue">TUE SEP 15</a>
+    <a href="#wed" id="nav-wed">WED SEP 16</a>
+  </nav>
+
+  <section class="day" id="tue">
+    <div class="dayhead"><h2>Tuesday</h2><span class="daysub">Sep 15 &middot; Brisbane &rarr; Seaside</span><span class="todaybadge" id="badge-tue" hidden>Today</span></div>
+    <div class="timeline">
+
+      <div class="item">
+        <div class="time mono">9:30a</div>
+        <div class="body">
+          <div class="title">Walking Zoom call &mdash; Sierra Point Bay Trail, Brisbane</div>
+          <div class="note">Flat, paved, bay views, reliable signal. Last dependable signal before the coast.</div>
+          <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Sierra+Point+Brisbane+CA" target="_blank" rel="noopener">Map &rarr;</a>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="time mono">10:00a</div>
+        <div class="body">
+          <div class="title">Depart Brisbane</div>
+          <div class="note">US-101 S &rarr; CA-156 W &rarr; CA-1 S. About 1h45.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="time mono">11:50a</div>
+        <div class="body">
+          <div class="title">Lunch &mdash; Phil's Fish Market &amp; Eatery</div>
+          <div class="note">10700 Merritt St, Castroville. Open Sun&ndash;Wed 10am&ndash;7pm. Order at the counter. Get the cioppino.</div>
+          <div class="links">
+            <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Phil%27s+Fish+Market+10700+Merritt+St+Castroville+CA" target="_blank" rel="noopener">Map &rarr;</a>
+            <a class="maplink" href="https://philsfishmarket.com/" target="_blank" rel="noopener">Site &rarr;</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="time mono">1:00p</div>
+        <div class="body">
+          <div class="title">Park at Cannery Row</div>
+          <div class="note">No aquarium lot &mdash; use a garage.</div>
+        </div>
+      </div>
+
+      <div class="item optional">
+        <div class="time mono">1:10p</div>
+        <div class="body">
+          <div class="title">San Carlos Beach / Breakwater Cove</div>
+          <div class="note">10 min walk from the aquarium. Protected by the breakwater so it's flat. Sea lions on the jetty. Water ~60&deg;F: a plunge, not a swim. Restrooms and showers on site.</div>
+          <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=San+Carlos+Beach+Breakwater+Cove+Monterey" target="_blank" rel="noopener">Map &rarr;</a>
+          <div class="vote" data-qid="q1" data-multi="true">
+            <div class="q">VOTE &mdash; Breakwater swim?</div>
+            <div class="opts">
+              <button class="opt" data-opt="yes">Yes<span class="dots"></span></button>
+              <button class="opt" data-opt="no">No<span class="dots"></span></button>
+              <button class="opt" data-opt="sunny">Only if it's sunny<span class="dots"></span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="time mono">2:15p</div>
+        <div class="body">
+          <div class="title">Monterey Bay Aquarium</div>
+          <div class="note">$65 adult, timed tickets must be bought in advance &mdash; ask about military/student rates. We're there for the 3:30 sea otter feeding: be at the Sea Otter exhibit by 3:20.</div>
+          <div class="links">
+            <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Monterey+Bay+Aquarium+886+Cannery+Row+Monterey" target="_blank" rel="noopener">Map &rarr;</a>
+            <a class="maplink" href="https://www.montereybayaquarium.org/visit/admission-tickets" target="_blank" rel="noopener">Tickets &rarr;</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="time mono">5:00p</div>
+        <div class="body">
+          <div class="title">Drive to Point Lobos</div>
+          <div class="note">~20 min</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="time mono">5:20p</div>
+        <div class="body">
+          <div class="title">Point Lobos State Natural Reserve</div>
+          <div class="note">$10/vehicle. Gates close 7:00pm, last entry 6:30pm. Sea Lion Point &rarr; Cypress Grove &rarr; Bird Island / China Cove, about 3 miles total. Golden hour. No swimming anywhere in the reserve (scuba only, by reservation). Ask at the kiosk whether the China Cove stairway is open.</div>
+          <div class="links">
+            <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Point+Lobos+State+Natural+Reserve" target="_blank" rel="noopener">Map &rarr;</a>
+            <a class="maplink" href="https://www.parks.ca.gov/pointlobos" target="_blank" rel="noopener">Park info &rarr;</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="time mono">7:00p</div>
+        <div class="body">
+          <div class="title">Sunset at Monastery Beach</div>
+          <div class="note">3 minutes north. Sunset 7:14pm. Stay on the sand &mdash; the dropoff is right offshore and people have drowned here.</div>
+          <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Monastery+Beach+Carmel" target="_blank" rel="noopener">Map &rarr;</a>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="time mono">8:00p</div>
+        <div class="body">
+          <div class="title">Dinner</div>
+          <div class="vote" data-qid="q2">
+            <div class="q">VOTE</div>
+            <div class="opts">
+              <button class="opt" data-opt="near">Find something near the Airbnb<span class="dots"></span></button>
+              <button class="opt" data-opt="cook">Groceries and cook<span class="dots"></span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="time mono">&mdash;</div>
+        <div class="body">
+          <div class="title">Check in: 550 Palm Ave, Seaside</div>
+          <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=550+Palm+Avenue+Seaside+CA+93955" target="_blank" rel="noopener">Map &rarr;</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="day" id="wed">
+    <div class="dayhead"><h2>Wednesday</h2><span class="daysub">Sep 16 &middot; Seaside &rarr; Big Sur &rarr; Brisbane</span><span class="todaybadge" id="badge-wed" hidden>Today</span></div>
+    <div class="timeline">
+
+      <div class="item">
+        <div class="time mono">7:00a</div>
+        <div class="body">
+          <div class="title">Check out, load the car, coffee in Seaside</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="time mono">7:20a</div>
+        <div class="body">
+          <div class="title">Drive south</div>
+          <div class="note">~40 min</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="time mono">8:00a</div>
+        <div class="body">
+          <div class="title">HIKE &mdash; Soberanes Canyon Trail, Garrapata SP</div>
+          <div class="note">~3&ndash;4 mi out and back. Cactus slopes into a redwood creek canyon. Free, roadside parking, no restrooms. Rocky Ridge is closed, so out-and-back only. Doing this first is deliberate: fog doesn't matter inside a canyon.</div>
+          <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Soberanes+Canyon+Trailhead+Garrapata+State+Park" target="_blank" rel="noopener">Map &rarr;</a>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="time mono">10:30a</div>
+        <div class="body">
+          <div class="title">Bixby Bridge</div>
+          <div class="note">View from the car only. No-parking zone in effect &mdash; they are ticketing.</div>
+          <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Bixby+Creek+Bridge+Big+Sur" target="_blank" rel="noopener">Map &rarr;</a>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="time mono">11:00a</div>
+        <div class="body">
+          <div class="title">Brunch</div>
+          <div class="vote" data-qid="q3">
+            <div class="q">VOTE</div>
+            <div class="opts">
+              <button class="opt" data-opt="roadhouse">Big Sur Roadhouse &mdash; daily 8&ndash;2:30, California regional<span class="dots"></span></button>
+              <button class="opt" data-opt="deetjens">Deetjen's Big Sur Inn &mdash; breakfast daily 8&ndash;12, candlelit redwood rooms<span class="dots"></span></button>
+            </div>
+          </div>
+          <div class="links">
+            <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Big+Sur+Roadhouse+47080+Highway+1+Big+Sur" target="_blank" rel="noopener">Roadhouse map &rarr;</a>
+            <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Deetjen%27s+Big+Sur+Inn+48865+Highway+1+Big+Sur" target="_blank" rel="noopener">Deetjen's map &rarr;</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="time mono">12:30p</div>
+        <div class="body">
+          <div class="title">BEACH &mdash; Pfeiffer Beach</div>
+          <div class="note">$15/vehicle. Unmarked turn onto Sycamore Canyon Rd, then 2.5 miles of one-lane road. Drive-in only &mdash; walking and biking the access road is prohibited. Purple-streaked sand, Keyhole Arch. Fog should be gone by now.</div>
+          <div class="links">
+            <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Pfeiffer+Beach+Sycamore+Canyon+Road+Big+Sur" target="_blank" rel="noopener">Map &rarr;</a>
+            <a class="maplink" href="https://www.fs.usda.gov/r05/lospadres/recreation/pfeiffer-beach-day-use" target="_blank" rel="noopener">USFS page &rarr;</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="item optional">
+        <div class="time mono">3:15p</div>
+        <div class="body">
+          <div class="title">Scenic drive south past Julia Pfeiffer Burns</div>
+          <div class="note">The park, McWay Falls and Partington Cove are all closed, but Highway 1 is open and this is the most dramatic driving on the coast.</div>
+          <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Julia+Pfeiffer+Burns+State+Park" target="_blank" rel="noopener">Map &rarr;</a>
+          <div class="vote" data-qid="q4">
+            <div class="q">VOTE &mdash; drive south past JPB?</div>
+            <div class="opts">
+              <button class="opt" data-opt="yes">Yes<span class="dots"></span></button>
+              <button class="opt" data-opt="no">No<span class="dots"></span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="time mono">5:00p</div>
+        <div class="body">
+          <div class="title">Dinner</div>
+          <div class="vote" data-qid="q5">
+            <div class="q">VOTE</div>
+            <div class="opts">
+              <button class="opt" data-opt="taphouse">Big Sur Taphouse &mdash; daily 12&ndash;9pm<span class="dots"></span></button>
+              <button class="opt" data-opt="deli">Big Sur Deli &mdash; sandwiches, next door<span class="dots"></span></button>
+            </div>
+          </div>
+          <div class="links">
+            <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Big+Sur+Taphouse+47520+Highway+1+Big+Sur" target="_blank" rel="noopener">Taphouse map &rarr;</a>
+            <a class="maplink" href="https://www.bigsurtaphouse.com/" target="_blank" rel="noopener">Taphouse site &rarr;</a>
+            <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Big+Sur+Deli+Big+Sur+CA" target="_blank" rel="noopener">Deli map &rarr;</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="time mono">6:30p</div>
+        <div class="body">
+          <div class="title">Depart north</div>
+        </div>
+      </div>
+
+      <div class="item optional">
+        <div class="time mono">7:00p</div>
+        <div class="body">
+          <div class="title">Garrapata Beach, Gate 19</div>
+          <div class="note">Steep stairway down to 2 miles of wild sand. Golden hour. No facilities, no lifeguard. Do not enter the water &mdash; the shorebreak is violent.</div>
+          <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Garrapata+Beach+Gate+19+Highway+1" target="_blank" rel="noopener">Map &rarr;</a>
+          <div class="vote" data-qid="q6">
+            <div class="q">VOTE &mdash; sunset stop?</div>
+            <div class="opts">
+              <button class="opt" data-opt="yes">Yes<span class="dots"></span></button>
+              <button class="opt" data-opt="skip">Skip it and get home earlier<span class="dots"></span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="time mono">~11:00p</div>
+        <div class="body">
+          <div class="title">Brisbane</div>
+          <div class="note">About 10:15pm if you skip Garrapata Beach.</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="checklist">
+    <div class="dayhead"><h2 style="font-size:19px;">Pre-trip checklist</h2></div>
+    <div class="clist" id="clist"></div>
+  </section>
+
+  <section class="verify">
+    <h3>Verify the morning of</h3>
+    <ul>
+      <li><strong>Pfeiffer Beach open?</strong> Monterey Ranger District, <a href="tel:8059686640">805-968-6640</a></li>
+      <li><strong>Julia Pfeiffer Burns / Partington Cove still closed?</strong> Was closed as of Sep 14.</li>
+      <li><strong>Aquarium closing time</strong> &mdash; their site never states it plainly; the ticket calendar shows it. Last entry is one hour before closing.</li>
+    </ul>
+    <div class="foot-links">
+      <a href="https://www.parks.ca.gov/post/125" target="_blank" rel="noopener">Park closure status</a> &middot;
+      <a href="https://www.seemonterey.com/plan-your-visit/travel-alert/" target="_blank" rel="noopener">Highway 1 / regional alerts</a>
+    </div>
+  </section>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function () {
+  var COLORS = [
+    { id: "green", label: "Green", css: "var(--dot-green)" },
+    { id: "blue",  label: "Blue",  css: "var(--dot-blue)" },
+    { id: "clay",  label: "Clay",  css: "var(--dot-clay)" },
+    { id: "gold",  label: "Gold",  css: "var(--dot-gold)" }
+  ];
+  var STORE_KEY = "bigsur-dot-2026";
+
+  var checklistItems = [
+    "Buy aquarium timed tickets for 4, 2:15pm entry",
+    "Download offline maps for Big Sur",
+    "Cash/card for gate fees: Point Lobos $10, Pfeiffer Beach $15, Garrapata free",
+    "Pack layers, windbreaker, long pants for evening, towel if swimming, headlamp",
+    "Nothing else needs a reservation — Phil's, Roadhouse, Deetjen's breakfast, Taphouse and the Deli are all walk-in"
+  ];
+
+  var myColor = null;
+  try { myColor = localStorage.getItem(STORE_KEY); } catch (e) {}
+
+  var swatchWrap = document.getElementById("swatches");
+  var idLabel = document.getElementById("idlabel");
+  COLORS.forEach(function (c) {
+    var b = document.createElement("button");
+    b.className = "swatch";
+    b.style.background = c.css;
+    b.setAttribute("aria-label", c.label + " dot");
+    b.setAttribute("aria-pressed", String(myColor === c.id));
+    b.addEventListener("click", function () {
+      myColor = c.id;
+      try { localStorage.setItem(STORE_KEY, c.id); } catch (e) {}
+      refreshSwatches();
+      updateIdLabel();
+    });
+    swatchWrap.appendChild(b);
+  });
+  function refreshSwatches() {
+    Array.prototype.forEach.call(swatchWrap.children, function (b, i) {
+      b.setAttribute("aria-pressed", String(myColor === COLORS[i].id));
+    });
+  }
+  function updateIdLabel() {
+    if (myColor) {
+      var c = COLORS.filter(function (x) { return x.id === myColor; })[0];
+      idLabel.textContent = "You're voting as the " + c.label.toLowerCase() + " dot.";
+    } else {
+      idLabel.textContent = "Pick your dot to vote — no names, no sign-in.";
+    }
+  }
+  updateIdLabel();
+
+  function colorCss(id) {
+    var c = COLORS.filter(function (x) { return x.id === id; })[0];
+    return c ? c.css : "var(--granite)";
+  }
+
+  var toastEl = document.getElementById("toast");
+  var toastTimer = null;
+  function toast(msg) {
+    toastEl.textContent = msg;
+    toastEl.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toastEl.classList.remove("show"); }, 1800);
+  }
+
+  // today badge
+  var now = new Date();
+  var y = now.getFullYear(), m = now.getMonth() + 1, d = now.getDate();
+  if (y === 2026 && m === 9 && d === 15) {
+    document.getElementById("badge-tue").hidden = false;
+    document.getElementById("nav-tue").classList.add("today");
+  } else if (y === 2026 && m === 9 && d === 16) {
+    document.getElementById("badge-wed").hidden = false;
+    document.getElementById("nav-wed").classList.add("today");
+  }
+
+  // checklist render (static shell, lights up once db resolves)
+  var clist = document.getElementById("clist");
+  var checkedState = {};
+  function renderChecklist() {
+    clist.innerHTML = "";
+    checklistItems.forEach(function (label, i) {
+      var key = "item" + i;
+      var row = document.createElement("label");
+      row.className = "citem" + (checkedState[key] ? " done" : "");
+      var input = document.createElement("input");
+      input.type = "checkbox";
+      input.id = "chk-" + i;
+      input.checked = !!checkedState[key];
+      input.addEventListener("change", function () {
+        setChecklistItem(key, input.checked);
+      });
+      var span = document.createElement("span");
+      span.textContent = label;
+      row.appendChild(input);
+      row.appendChild(span);
+      clist.appendChild(row);
+    });
+  }
+  renderChecklist();
+
+  // vote widgets render (static shell, lights up once db resolves)
+  var voteEls = Array.prototype.slice.call(document.querySelectorAll(".vote"));
+  var voteState = {};
+  function renderVotes() {
+    voteEls.forEach(function (el) {
+      var qid = el.dataset.qid;
+      var tally = voteState[qid] || {};
+      var buttons = el.querySelectorAll(".opt");
+      buttons.forEach(function (btn) {
+        var opt = btn.dataset.opt;
+        var voters = Object.keys(tally).filter(function (color) { return tally[color] === opt; });
+        btn.setAttribute("aria-pressed", String(myColor && tally[myColor] === opt));
+        var dotsEl = btn.querySelector(".dots");
+        dotsEl.innerHTML = "";
+        voters.forEach(function (color) {
+          var d = document.createElement("span");
+          d.className = "d";
+          d.style.background = colorCss(color);
+          dotsEl.appendChild(d);
+        });
+      });
+    });
+  }
+  renderVotes();
+
+  voteEls.forEach(function (el) {
+    el.querySelectorAll(".opt").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        if (!myColor) {
+          toast("Pick your dot up top first");
+          document.getElementById("swatches").scrollIntoView({ behavior: "smooth", block: "center" });
+          return;
+        }
+        castVote(el.dataset.qid, btn.dataset.opt);
+      });
+    });
+  });
+
+  var db = null;
+  var votesRef = null;
+  var checklistRef = null;
+
+  function castVote(qid, opt) {
+    var patch = {};
+    patch[qid] = {};
+    patch[qid][myColor] = opt;
+    voteState[qid] = Object.assign({}, voteState[qid], patch[qid]);
+    renderVotes();
+    if (!votesRef) { toast("Not connected — vote not saved"); return; }
+    votesRef.update(patch).catch(function () {
+      votesRef.set(patch).catch(function () {});
+    });
+  }
+
+  function setChecklistItem(key, val) {
+    checkedState[key] = val;
+    renderChecklist();
+    if (!checklistRef) return;
+    var patch = {};
+    patch[key] = val;
+    checklistRef.update(patch).catch(function () {
+      checklistRef.set(patch).catch(function () {});
+    });
+  }
+
+  if (window.claude && typeof window.claude.use === "function") {
+    window.claude.use("db").then(function (ns) {
+      if (!ns) return;
+      db = ns;
+      votesRef = db.doc("trip/votes");
+      checklistRef = db.doc("trip/checklist");
+
+      votesRef.onSnapshot(function (snap) {
+        voteState = snap.exists ? (snap.data() || {}) : {};
+        renderVotes();
+      }, function () {});
+
+      checklistRef.onSnapshot(function (snap) {
+        checkedState = snap.exists ? (snap.data() || {}) : {};
+        renderChecklist();
+      }, function () {});
+    }).catch(function () {});
+  }
+})();
+</script>
